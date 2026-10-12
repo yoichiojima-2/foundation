@@ -1,5 +1,5 @@
-fn read_file(file: &str) -> Result<String, std::io::Error> {
-    std::fs::read_to_string(file)
+fn read_file(file: &str) -> Result<String, String> {
+    std::fs::read_to_string(file).map_err(|e| format!("cannot read {file}: {e}"))
 }
 
 fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
@@ -12,15 +12,23 @@ fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     res
 }
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
+fn run() -> Result<(), Box<dyn std::error::Error>> {
     let args: Vec<String> = std::env::args().collect();
-    let query = args.get(1).ok_or("usage minigrep <query> <file>")?;
-    let file = args.get(2).ok_or("usage minigrep <query> <file>")?;
+    const USAGE: &str = "usage: minigrep <query> <file>";
+    let query = args.get(1).ok_or(USAGE)?;
+    let file = args.get(2).ok_or(USAGE)?;
     let contents = read_file(file)?;
     for line in search(query, &contents) {
         println!("{line}");
     }
     Ok(())
+}
+
+fn main() {
+    if let Err(e) = run() {
+        eprintln!("{e}");
+        std::process::exit(1);
+    }
 }
 
 #[cfg(test)]

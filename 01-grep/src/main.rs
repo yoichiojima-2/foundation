@@ -17,12 +17,15 @@ fn read_file(file: &str) -> String {
         }
     }
 }
-fn search(contents: &str, query: &str) {
+
+fn search<'a>(query: & str, contents: &'a str) -> Vec<&'a str>{
+    let mut res: Vec<&str> = Vec::new();
     for line in contents.lines() {
         if line.contains(query) {
-            println!("{line}");
+            res.push(line);
         }
     }
+    res
 }
 
 fn main() {
@@ -30,5 +33,8 @@ fn main() {
     let query = get_arg(&args, 1);
     let file = get_arg(&args, 2);
     let contents = read_file(file);
-    search(&contents, query);
+    let res = search(query, &contents);
+    for line in res {
+        println!("{line}");
+    }
 }

@@ -1,21 +1,5 @@
-fn get_arg(args: &[String], i: usize) -> &str {
-    match args.get(i) {
-        Some(arg) => arg,
-        None => {
-            eprintln!("usage: minigrep <query> <file>");
-            std::process::exit(1);
-        }
-    }
-}
-
-fn read_file(file: &str) -> String {
-    match std::fs::read_to_string(file) {
-        Ok(content) => content,
-        Err(e) => {
-            eprintln!("cannot read {file}: {e}");
-            std::process::exit(1);
-        }
-    }
+fn read_file(file: &str) -> Result<String, std::io::Error> {
+    std::fs::read_to_string(file)
 }
 
 fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
@@ -28,14 +12,15 @@ fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     res
 }
 
-fn main() {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args: Vec<String> = std::env::args().collect();
-    let query = get_arg(&args, 1);
-    let file = get_arg(&args, 2);
-    let contents = read_file(file);
+    let query = args.get(1).ok_or("usage minigrep <query> <file>")?;
+    let file = args.get(2).ok_or("usage minigrep <query> <file>")?;
+    let contents = read_file(file)?;
     for line in search(query, &contents) {
         println!("{line}");
     }
+    Ok(())
 }
 
 #[cfg(test)]
@@ -51,7 +36,7 @@ mod tests {
     }
 
     #[test]
-    fn finds_multiple_lines() {
+    fn skips_non_matching_lines() {
         let query = "hello";
         let contents = "hello world\nbye world";
         let result = search(query, contents);

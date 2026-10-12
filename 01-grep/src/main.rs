@@ -1,3 +1,5 @@
+const USAGE: &str = "usage: minigrep <query> <file>";
+
 fn read_file(file: &str) -> Result<String, String> {
     std::fs::read_to_string(file).map_err(|e| format!("cannot read {file}: {e}"))
 }
@@ -14,7 +16,6 @@ fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 
 fn run() -> Result<(), Box<dyn std::error::Error>> {
     let args: Vec<String> = std::env::args().collect();
-    const USAGE: &str = "usage: minigrep <query> <file>";
     let query = args.get(1).ok_or(USAGE)?;
     let file = args.get(2).ok_or(USAGE)?;
     let contents = read_file(file)?;

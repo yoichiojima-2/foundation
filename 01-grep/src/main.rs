@@ -49,4 +49,20 @@ mod tests {
         let result = search(query, contents);
         assert_eq!(result, vec!["hello world"]);
     }
+
+    #[test]
+    fn finds_multiple_lines() {
+        let query = "hello";
+        let contents = "hello world\nbye world";
+        let result = search(query, contents);
+        assert_eq!(result, vec!["hello world"]);
+    }
+
+    #[test]
+    fn finds_nothing() {
+        let query = "hello";
+        let contents = "bye world";
+        let result = search(query, contents);
+        assert!(result.is_empty());
+    }
 }

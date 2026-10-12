@@ -1,18 +1,16 @@
+fn get_arg(args: &[String], i: usize) -> &String {
+    match args.get(i) {
+        Some(arg) => arg,
+        None => {
+            eprintln!("usage: minigrep <query> <file>");
+            std::process::exit(1);
+        }
+    }
+}
+
 fn main() {
     let args: Vec<String> = std::env::args().collect();
-    let query = match args.get(1) {
-        Some(q) => q,
-        None => {
-            eprintln!("usage: minigrep <query> <file>");
-            std::process::exit(1);
-        }
-    };
-    let file = match args.get(2) {
-        Some(f) => f,
-        None => {
-            eprintln!("usage: minigrep <query> <file>");
-            std::process::exit(1);
-        }
-    };
+    let query = get_arg(&args, 1);
+    let file = get_arg(&args, 2);
     println!("query: {query} / file: {file}");
 }

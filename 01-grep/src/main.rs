@@ -37,3 +37,16 @@ fn main() {
         println!("{line}");
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn finds_one_line() {
+        let query = "hello";
+        let contents = "hello world";
+        let result = search(query, contents);
+        assert_eq!(result, vec!["hello world"]);
+    }
+}

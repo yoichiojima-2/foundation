@@ -33,8 +33,7 @@ fn main() {
     let query = get_arg(&args, 1);
     let file = get_arg(&args, 2);
     let contents = read_file(file);
-    let res = search(query, &contents);
-    for line in res {
+    for line in search(query, &contents) {
         println!("{line}");
     }
 }

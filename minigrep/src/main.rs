@@ -10,7 +10,7 @@ impl Config {
     fn build(args: &[String]) -> Result<Config, Box<dyn std::error::Error>> {
         let query = args.get(1).ok_or(USAGE)?.clone();
         let file = args.get(2).ok_or(USAGE)?.clone();
-        let ignore_case = std::env::var("IGNORE_CASE").is_ok();
+        let ignore_case = std::env::var("IGNORE_CASE").is_ok_and(|v| v != "0");
         Ok(Config {
             query,
             file,

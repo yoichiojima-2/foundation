@@ -14,6 +14,17 @@ fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     res
 }
 
+fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+    let mut res = Vec::new();
+    let query_lower = query.to_lowercase();
+    for line in contents.lines() {
+        if line.contains(&query_lower) {
+            res.push(line);
+        }
+    }
+    res
+}
+
 fn run() -> Result<(), Box<dyn std::error::Error>> {
     let args: Vec<String> = std::env::args().collect();
     let query = args.get(1).ok_or(USAGE)?;
@@ -58,5 +69,13 @@ mod tests {
         let contents = "bye world";
         let result = search(query, contents);
         assert!(result.is_empty());
+    }
+
+    #[test]
+    fn case_insensitive() {
+        let query = "Hello";
+        let contents = "hello world\nbye world";
+        let result = search_case_insensitive(query, contents);
+        assert_eq!(result, vec!["hello world"]);
     }
 }

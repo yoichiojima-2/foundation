@@ -1,1 +1,0 @@
-/home/user/foundation/target/debug/libcalc.rlib: /home/user/foundation/calc/src/eval.rs /home/user/foundation/calc/src/lexer.rs /home/user/foundation/calc/src/lib.rs /home/user/foundation/calc/src/parser.rs

@@ -7,9 +7,10 @@ struct Config {
 }
 
 impl Config {
-    fn build(args: &[String]) -> Result<Config, Box<dyn std::error::Error>> {
-        let query = args.get(1).ok_or(USAGE)?.clone();
-        let file = args.get(2).ok_or(USAGE)?.clone();
+    fn build(mut args: impl Iterator<Item = String>) -> Result<Config, Box<dyn std::error::Error>> {
+        args.next(); // skip the program name
+        let query = args.next().ok_or(USAGE)?;
+        let file = args.next().ok_or(USAGE)?;
         let ignore_case = std::env::var("IGNORE_CASE").is_ok_and(|v| v != "0");
         Ok(Config {
             query,
@@ -45,8 +46,8 @@ fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 }
 
 fn run() -> Result<(), Box<dyn std::error::Error>> {
-    let args: Vec<String> = std::env::args().collect();
-    let config = Config::build(&args)?;
+    let args = std::env::args();
+    let config = Config::build(args)?;
     let contents = read_file(&config.file)?;
     let lines = if config.ignore_case {
         search_case_insensitive(&config.query, &contents)
@@ -69,6 +70,14 @@ fn main() {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn builds_config() {
+        let args = ["minigrep", "query", "file"].map(String::from).into_iter();
+        let config = Config::build(args).unwrap();
+        assert_eq!(config.query, "query");
+        assert_eq!(config.file, "file");
+    }
 
     #[test]
     fn finds_one_line() {

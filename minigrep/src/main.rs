@@ -25,24 +25,11 @@ fn read_file(file: &str) -> Result<String, String> {
 }
 
 fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-    let mut res = Vec::new();
-    for line in contents.lines() {
-        if line.contains(query) {
-            res.push(line);
-        }
-    }
-    res
+    contents.lines().filter(|line| line.contains(query)).collect()
 }
 
 fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-    let mut res = Vec::new();
-    let query_lower = query.to_lowercase();
-    for line in contents.lines() {
-        if line.to_lowercase().contains(&query_lower) {
-            res.push(line);
-        }
-    }
-    res
+    contents.lines().filter(|line| line.to_lowercase().contains(&query.to_lowercase())).collect()
 }
 
 fn run() -> Result<(), Box<dyn std::error::Error>> {

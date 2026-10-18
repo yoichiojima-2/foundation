@@ -80,6 +80,13 @@ mod tests {
     }
 
     #[test]
+    fn raises_error_on_missing_args() {
+        let args = ["minigrep"].map(String::from).into_iter();
+        let config = Config::build(args);
+        assert!(config.is_err());
+    }
+
+    #[test]
     fn finds_one_line() {
         let query = "hello";
         let contents = "hello world";

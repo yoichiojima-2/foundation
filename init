@@ -6,3 +6,5 @@ uv init $name
 mkdir $name/tests
 touch "${name}/src/${name//-/_}/solution.py"
 touch "${name}/tests/test_solution.py"
+
+echo "created: $name"

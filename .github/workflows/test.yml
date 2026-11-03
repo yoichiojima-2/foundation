@@ -16,7 +16,7 @@ jobs:
           set -euo pipefail
           for proj in $(find . -name pyproject.toml -not -path '*/.venv/*' -exec dirname {} \;); do
             echo "::group::$proj"
-            (cd "$proj" && uv sync --frozen && uv run pytest)
+            (cd "$proj" && uv sync --frozen && uv run pytest -vvv)
             echo "::endgroup::"
           done
 

@@ -1,22 +1,7 @@
 import pytest
-from reversed_linked_list.solution import ListNode, Solution
+from reversed_linked_list.solution import Solution
 
-
-def to_linked(values):
-    dummy = ListNode()
-    curr = dummy
-    for v in values:
-        curr.next = ListNode(v)
-        curr = curr.next
-    return dummy.next
-
-
-def to_list(head):
-    out = []
-    while head:
-        out.append(head.val)
-        head = head.next
-    return out
+from dsa import to_linked, to_list
 
 
 @pytest.mark.parametrize(

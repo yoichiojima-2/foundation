@@ -12,6 +12,17 @@ wheels = [
 ]
 
 [[package]]
+name = "dsa"
+version = "0.1.0"
+source = { editable = "../dsa" }
+dependencies = [
+    { name = "pytest" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "pytest", specifier = ">=9.2.0" }]
+
+[[package]]
 name = "iniconfig"
 version = "2.3.1"
 source = { registry = "https://pypi.org/simple" }
@@ -25,11 +36,15 @@ name = "maximum-depth-of-binary-tree"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "dsa" },
     { name = "pytest" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "pytest", specifier = ">=9.2.0" }]
+requires-dist = [
+    { name = "dsa", editable = "../dsa" },
+    { name = "pytest", specifier = ">=9.2.0" },
+]
 
 [[package]]
 name = "packaging"

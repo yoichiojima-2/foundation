@@ -11,6 +11,7 @@ init() {
     touch "src/${name//-/_}/solution.py"
     touch "tests/test_solution.py"
     uv add pytest
+    uv add --editable ../dsa
     cd ..
 
     echo "created: $name"

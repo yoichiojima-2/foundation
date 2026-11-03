@@ -1,16 +1,8 @@
-from __future__ import annotations
-
-from dataclasses import dataclass
-
-
-@dataclass
-class ListNode:
-    val: int = 0
-    next: ListNode | None = None
+from dsa import ListNode
 
 
 class Solution:
-    def solution(self, head):
+    def solution(self, head: ListNode | None) -> ListNode | None:
         curr, prev = head, None
         while curr:
             nxt = curr.next

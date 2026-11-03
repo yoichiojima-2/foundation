@@ -1,0 +1,8 @@
+#!/bin/bash
+
+name=$1
+
+uv init $name
+mkdir $name/tests
+touch "${name}/src/${name//-/_}/solution.py"
+touch "${name}/tests/test_solution.py"

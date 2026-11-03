@@ -7,7 +7,9 @@ authors = [
     { name = "yoichi ojima", email = "yoichiojima@gmail.com" }
 ]
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "pytest>=9.2.0",
+]
 
 [project.scripts]
 valid-palindrome = "valid_palindrome:main"

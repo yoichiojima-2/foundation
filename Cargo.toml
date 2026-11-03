@@ -1,3 +1,0 @@
-[workspace]
-members = ["minigrep"]
-resolver = "2"

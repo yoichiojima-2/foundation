@@ -1,10 +1,17 @@
 #!/bin/bash
 
-name=$1
+init() {
+    name=$1
 
-uv init $name
-mkdir $name/tests
-touch "${name}/src/${name//-/_}/solution.py"
-touch "${name}/tests/test_solution.py"
+    uv init $name
+    cd $name
+    mkdir tests
+    touch "src/${name//-/_}/solution.py"
+    touch "tests/test_solution.py"
+    uv add pytest
+    cd ..
 
-echo "created: $name"
+    echo "created: $name"
+}
+
+init $@

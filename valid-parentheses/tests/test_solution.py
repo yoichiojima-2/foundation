@@ -13,7 +13,7 @@ from valid_parentheses.solution import Solution
         ("([{}])", True),
         ("][", False),
         ("(((((((((()))))))))", False),
-    ]
+    ],
 )
 def test_valid_parentheses(s, expected):
     assert Solution().solution(s) == expected

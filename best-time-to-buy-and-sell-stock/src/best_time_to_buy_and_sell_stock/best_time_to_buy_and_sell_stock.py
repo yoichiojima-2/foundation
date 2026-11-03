@@ -8,4 +8,3 @@ class Solution:
             elif p - min_price > best:
                 best = p - min_price
         return best
-

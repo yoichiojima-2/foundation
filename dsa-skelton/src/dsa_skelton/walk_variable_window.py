@@ -10,5 +10,5 @@ def walk_variable_window(nums: list[int], k: int):
         while sum_ > k:
             sum_ -= nums[left]
             left += 1
-        results.append(nums[left:right + 1])
+        results.append(nums[left : right + 1])
     return results

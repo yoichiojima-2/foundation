@@ -9,4 +9,3 @@ def walk_two_pointers(nums: list[int]):
         left += 1
         right -= 1
     return res
-

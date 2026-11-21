@@ -10,10 +10,7 @@ def walk_grid_dfs(grid: list[list[int]]) -> list[tuple[int, int]]:
     visited = []
 
     def dfs(row, col):
-        if (
-            row < 0 or col < 0 or row >= rows or col >= cols
-            or grid[row][col] == 0
-        ):
+        if row < 0 or col < 0 or row >= rows or col >= cols or grid[row][col] == 0:
             return
         grid[row][col] = 0
         visited.append((row, col))

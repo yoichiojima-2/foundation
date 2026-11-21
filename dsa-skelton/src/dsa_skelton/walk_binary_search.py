@@ -10,4 +10,3 @@ def walk_binary_search(nums: list[int], target: int) -> int:
         elif nums[mid] > target:
             right = mid - 1
     return -1
-

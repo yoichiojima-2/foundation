@@ -4,8 +4,11 @@ def walk_variable_window(nums: list[int], k: int):
     """
     left = 0
     results = []
+    sum_ = 0
     for right in range(len(nums)):
-        if right - left + 1 > k:
+        sum_ += nums[right]
+        while sum_ > k:
+            sum_ -= nums[left]
             left += 1
-        results.append(nums[left:right])
+        results.append(nums[left:right + 1])
     return results

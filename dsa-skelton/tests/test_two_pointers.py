@@ -1,27 +1,21 @@
+import pytest
 from dsa_skelton.walk_two_pointers import walk_two_pointers
 
-NUMS1 = [1, 2, 3, 4, 5]  # odd length: middle element is never paired
-NUMS2 = []
-NUMS3 = [7]
-NUMS4 = [1, 1, 2, 2]
-NUMS5 = [1, 2, 3, 4, 5, 6, 7, 8]
 
-
-def test_small():
-    assert walk_two_pointers(NUMS1) == [(1, 5), (2, 4)]
-
-
-def test_empty():
-    assert walk_two_pointers(NUMS2) == []
-
-
-def test_single():
-    assert walk_two_pointers(NUMS3) == []
-
-
-def test_duplicates():
-    assert walk_two_pointers(NUMS4) == [(1, 2), (1, 2)]
-
-
-def test_larger():
-    assert walk_two_pointers(NUMS5) == [(1, 8), (2, 7), (3, 6), (4, 5)]
+@pytest.mark.parametrize(
+    "nums, expected",
+    [
+        # odd length: middle element is never paired
+        pytest.param([1, 2, 3, 4, 5], [(1, 5), (2, 4)], id="small"),
+        pytest.param([], [], id="empty"),
+        pytest.param([7], [], id="single"),
+        pytest.param([1, 1, 2, 2], [(1, 2), (1, 2)], id="duplicates"),
+        pytest.param(
+            [1, 2, 3, 4, 5, 6, 7, 8],
+            [(1, 8), (2, 7), (3, 6), (4, 5)],
+            id="larger",
+        ),
+    ],
+)
+def test_walk_two_pointers(nums, expected):
+    assert walk_two_pointers(nums) == expected

@@ -1,27 +1,16 @@
+import pytest
 from dsa_skelton.walk_stack import walk_stack
 
-ITEMS1 = [1, 2, 3]
-ITEMS2 = []
-ITEMS3 = [7]
-ITEMS4 = [1, 2, 2, 3, 1]
-ITEMS5 = list(range(10))
 
-
-def test_small():
-    assert walk_stack(ITEMS1) == [3, 2, 1]
-
-
-def test_empty():
-    assert walk_stack(ITEMS2) == []
-
-
-def test_single():
-    assert walk_stack(ITEMS3) == [7]
-
-
-def test_duplicates():
-    assert walk_stack(ITEMS4) == [1, 3, 2, 2, 1]
-
-
-def test_larger():
-    assert walk_stack(ITEMS5) == [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+@pytest.mark.parametrize(
+    "items, expected",
+    [
+        pytest.param([1, 2, 3], [3, 2, 1], id="small"),
+        pytest.param([], [], id="empty"),
+        pytest.param([7], [7], id="single"),
+        pytest.param([1, 2, 2, 3, 1], [1, 3, 2, 2, 1], id="duplicates"),
+        pytest.param(list(range(10)), [9, 8, 7, 6, 5, 4, 3, 2, 1, 0], id="larger"),
+    ],
+)
+def test_walk_stack(items, expected):
+    assert walk_stack(items) == expected

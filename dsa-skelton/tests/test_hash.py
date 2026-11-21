@@ -1,22 +1,19 @@
+import pytest
 from dsa_skelton.walk_hash import walk_hash
 
-NUMS1 = [1, 2, 2, 3, 3, 3]
-NUMS2 = []
-NUMS3 = [5]
-NUMS4 = [4, 1, 4, 2, 1, 4, 3, 2, 4]
 
-
-def test_small():
-    assert walk_hash(NUMS1) == {1: 1, 2: 2, 3: 3}
-
-
-def test_empty():
-    assert walk_hash(NUMS2) == {}
-
-
-def test_single():
-    assert walk_hash(NUMS3) == {5: 1}
-
-
-def test_larger_duplicates():
-    assert walk_hash(NUMS4) == {4: 4, 1: 2, 2: 2, 3: 1}
+@pytest.mark.parametrize(
+    "nums, expected",
+    [
+        pytest.param([1, 2, 2, 3, 3, 3], {1: 1, 2: 2, 3: 3}, id="small"),
+        pytest.param([], {}, id="empty"),
+        pytest.param([5], {5: 1}, id="single"),
+        pytest.param(
+            [4, 1, 4, 2, 1, 4, 3, 2, 4],
+            {4: 4, 1: 2, 2: 2, 3: 1},
+            id="larger-duplicates",
+        ),
+    ],
+)
+def test_walk_hash(nums, expected):
+    assert walk_hash(nums) == expected

@@ -1,35 +1,29 @@
+import pytest
 from dsa_skelton.walk_binary_search import walk_binary_search
 
-NUMS1, TARGET1 = [1, 3, 5, 7, 9, 11], 7
-NUMS2, TARGET2 = [], 3
-NUMS3, TARGET3 = [5], 5
-NUMS4, TARGET4 = [1, 3, 5], 4  # absent
-NUMS5, TARGET5 = [1, 2, 2, 2, 3], 2
-NUMS6 = list(range(0, 100, 3))  # 0, 3, ..., 99
-TARGET6_HIT, TARGET6_MISS = 51, 50
+
+@pytest.mark.parametrize(
+    "nums, target, expected",
+    [
+        pytest.param([1, 3, 5, 7, 9, 11], 7, 3, id="small"),
+        pytest.param([], 3, -1, id="empty"),
+        pytest.param([5], 5, 0, id="single"),
+        pytest.param([1, 3, 5], 4, -1, id="absent"),
+        pytest.param(list(range(0, 100, 3)), 51, 17, id="larger-hit"),
+        pytest.param(list(range(0, 100, 3)), 50, -1, id="larger-miss"),
+    ],
+)
+def test_walk_binary_search(nums, target, expected):
+    assert walk_binary_search(nums, target) == expected
 
 
-def test_small():
-    assert walk_binary_search(NUMS1, TARGET1) == 3
-
-
-def test_empty():
-    assert walk_binary_search(NUMS2, TARGET2) == -1
-
-
-def test_single():
-    assert walk_binary_search(NUMS3, TARGET3) == 0
-
-
-def test_absent():
-    assert walk_binary_search(NUMS4, TARGET4) == -1
-
-
-def test_duplicates():
-    # Any index holding the target is correct; which one depends on the midpoints taken.
-    assert walk_binary_search(NUMS5, TARGET5) in {1, 2, 3}
-
-
-def test_larger():
-    assert walk_binary_search(NUMS6, TARGET6_HIT) == 17
-    assert walk_binary_search(NUMS6, TARGET6_MISS) == -1
+@pytest.mark.parametrize(
+    "nums, target, valid",
+    [
+        # Any index holding the target is correct;
+        # which one depends on the midpoints taken.
+        pytest.param([1, 2, 2, 2, 3], 2, {1, 2, 3}, id="duplicates"),
+    ],
+)
+def test_walk_binary_search_any_match(nums, target, valid):
+    assert walk_binary_search(nums, target) in valid

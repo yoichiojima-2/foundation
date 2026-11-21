@@ -1,38 +1,38 @@
+import pytest
 from dsa_skelton.walk_topo import walk_topo
 
+
 # Every node appears as a key; graph[u] lists the nodes u points to.
-GRAPH1 = {5: [2, 0], 4: [0, 1], 2: [3], 3: [1], 0: [], 1: []}
-GRAPH2 = {}
-GRAPH3 = {1: []}
-GRAPH4 = {1: [2], 2: [3], 3: []}  # a chain has exactly one valid order
-GRAPH5 = {1: [2, 3], 2: [4], 3: [4, 5], 4: [6], 5: [6], 6: [7], 7: [], 8: [5]}
+@pytest.mark.parametrize(
+    "graph, expected",
+    [
+        pytest.param({}, [], id="empty"),
+        pytest.param({1: []}, [1], id="single"),
+        pytest.param(
+            {1: [2], 2: [3], 3: []}, [1, 2, 3], id="chain"
+        ),  # only one valid order
+    ],
+)
+def test_walk_topo_unique(graph, expected):
+    assert walk_topo(graph) == expected
 
 
-def _assert_topo(order, graph):
+@pytest.mark.parametrize(
+    "graph",
+    [
+        pytest.param({5: [2, 0], 4: [0, 1], 2: [3], 3: [1], 0: [], 1: []}, id="small"),
+        pytest.param(
+            {1: [2, 3], 2: [4], 3: [4, 5], 4: [6], 5: [6], 6: [7], 7: [], 8: [5]},
+            id="larger-branching",
+        ),
+    ],
+)
+def test_walk_topo_valid(graph):
     # Topological order is not unique, so check it is a valid one:
     # same nodes (sorted comparison) and every edge points forward.
+    order = walk_topo(graph)
     assert sorted(order) == sorted(graph)
     pos = {node: i for i, node in enumerate(order)}
     for u, vs in graph.items():
         for v in vs:
             assert pos[u] < pos[v], f"edge {u}->{v} out of order in {order}"
-
-
-def test_small():
-    _assert_topo(walk_topo(GRAPH1), GRAPH1)
-
-
-def test_empty():
-    assert walk_topo(GRAPH2) == []
-
-
-def test_single():
-    assert walk_topo(GRAPH3) == [1]
-
-
-def test_chain():
-    assert walk_topo(GRAPH4) == [1, 2, 3]
-
-
-def test_larger_branching():
-    _assert_topo(walk_topo(GRAPH5), GRAPH5)

@@ -1,57 +1,52 @@
+import pytest
 from dsa_skelton.walk_grid_dfs import walk_grid_dfs
 
-GRID1 = [
-    [1, 1, 0],
-    [0, 1, 0],
-    [0, 0, 1],
-]
-GRID2 = []
-GRID3 = [
-    [0, 0],
-    [0, 0],
-]
-GRID4 = [[1]]
-GRID5 = [
-    [1, 1, 0, 0, 1],
-    [1, 0, 0, 1, 1],
-    [0, 0, 1, 0, 0],
-    [1, 1, 1, 0, 1],
-]
 
-
-def _copy(grid):
-    # Pass a copy so solutions that mark visited cells in place
-    # don't alter the constants.
-    return [row[:] for row in grid]
-
-
-def test_small():
-    assert walk_grid_dfs(_copy(GRID1)) == [(0, 0), (0, 1), (1, 1), (2, 2)]
-
-
-def test_empty():
-    assert walk_grid_dfs(_copy(GRID2)) == []
-
-
-def test_all_water():
-    assert walk_grid_dfs(_copy(GRID3)) == []
-
-
-def test_single():
-    assert walk_grid_dfs(_copy(GRID4)) == [(0, 0)]
-
-
-def test_larger():
-    assert walk_grid_dfs(_copy(GRID5)) == [
-        (0, 0),
-        (1, 0),
-        (0, 1),
-        (0, 4),
-        (1, 4),
-        (1, 3),
-        (2, 2),
-        (3, 2),
-        (3, 1),
-        (3, 0),
-        (3, 4),
-    ]
+@pytest.mark.parametrize(
+    "grid, expected",
+    [
+        pytest.param(
+            [
+                [1, 1, 0],
+                [0, 1, 0],
+                [0, 0, 1],
+            ],
+            [(0, 0), (0, 1), (1, 1), (2, 2)],
+            id="small",
+        ),
+        pytest.param([], [], id="empty"),
+        pytest.param(
+            [
+                [0, 0],
+                [0, 0],
+            ],
+            [],
+            id="all-water",
+        ),
+        pytest.param([[1]], [(0, 0)], id="single"),
+        pytest.param(
+            [
+                [1, 1, 0, 0, 1],
+                [1, 0, 0, 1, 1],
+                [0, 0, 1, 0, 0],
+                [1, 1, 1, 0, 1],
+            ],
+            [
+                (0, 0),
+                (1, 0),
+                (0, 1),
+                (0, 4),
+                (1, 4),
+                (1, 3),
+                (2, 2),
+                (3, 2),
+                (3, 1),
+                (3, 0),
+                (3, 4),
+            ],
+            id="larger",
+        ),
+    ],
+)
+def test_walk_grid_dfs(grid, expected):
+    assert walk_grid_dfs(grid) == expected

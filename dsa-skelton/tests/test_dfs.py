@@ -41,4 +41,4 @@ from dsa_skelton.walk_dfs import walk_dfs
     ],
 )
 def test_walk_dfs(tree, node, expected):
-    assert walk_dfs(tree, node, []) == expected
+    assert walk_dfs(tree, node) == expected

@@ -8,6 +8,7 @@ authors = [
 ]
 requires-python = ">=3.13"
 dependencies = [
+    "pytest>=9.2.0",
     "ruff>=0.17.6",
 ]
 
@@ -24,5 +25,4 @@ dev = [
 ]
 
 [tool.pytest.ini_options]
-testpaths = ["src"]
-python_files = ["walk_*.py"]
+testpaths = ["tests"]

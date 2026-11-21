@@ -1,10 +1,9 @@
-from dsa_skelton.walk_hash import (
-    NUMS1,
-    NUMS2,
-    NUMS3,
-    NUMS4,
-    walk_hash,
-)
+from dsa_skelton.walk_hash import walk_hash
+
+NUMS1 = [1, 2, 2, 3, 3, 3]
+NUMS2 = []
+NUMS3 = [5]
+NUMS4 = [4, 1, 4, 2, 1, 4, 3, 2, 4]
 
 
 def test_small():

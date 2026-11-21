@@ -1,11 +1,10 @@
-from dsa_skelton.walk_prefix import (
-    NUMS1,
-    NUMS2,
-    NUMS3,
-    NUMS4,
-    NUMS5,
-    walk_prefix,
-)
+from dsa_skelton.walk_prefix import walk_prefix
+
+NUMS1 = [1, 2, 3, 4]
+NUMS2 = []
+NUMS3 = [5]
+NUMS4 = [2, 2, 2]
+NUMS5 = [3, -1, 3, -1, 0, 2, 5, -4]
 
 
 def test_small():

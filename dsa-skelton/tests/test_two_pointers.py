@@ -1,11 +1,10 @@
-from dsa_skelton.walk_two_pointers import (
-    NUMS1,
-    NUMS2,
-    NUMS3,
-    NUMS4,
-    NUMS5,
-    walk_two_pointers,
-)
+from dsa_skelton.walk_two_pointers import walk_two_pointers
+
+NUMS1 = [1, 2, 3, 4, 5]  # odd length: middle element is never paired
+NUMS2 = []
+NUMS3 = [7]
+NUMS4 = [1, 1, 2, 2]
+NUMS5 = [1, 2, 3, 4, 5, 6, 7, 8]
 
 
 def test_small():

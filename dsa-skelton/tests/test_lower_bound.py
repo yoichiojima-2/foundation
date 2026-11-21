@@ -1,13 +1,10 @@
-from dsa_skelton.walk_lower_bound import (
-    NUMS1,
-    NUMS2,
-    NUMS3,
-    NUMS4,
-    NUMS5,
-    TARGET2,
-    TARGET4,
-    walk_lower_bound,
-)
+from dsa_skelton.walk_lower_bound import walk_lower_bound
+
+NUMS1 = [1, 3, 5, 7]
+NUMS2, TARGET2 = [], 3
+NUMS3 = [5]
+NUMS4, TARGET4 = [1, 2, 2, 2, 3], 2
+NUMS5 = list(range(0, 100, 3))  # 0, 3, ..., 99
 
 
 def test_small():

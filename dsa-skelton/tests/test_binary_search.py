@@ -1,19 +1,12 @@
-from dsa_skelton.walk_binary_search import (
-    NUMS1,
-    NUMS2,
-    NUMS3,
-    NUMS4,
-    NUMS5,
-    NUMS6,
-    TARGET1,
-    TARGET2,
-    TARGET3,
-    TARGET4,
-    TARGET5,
-    TARGET6_HIT,
-    TARGET6_MISS,
-    walk_binary_search,
-)
+from dsa_skelton.walk_binary_search import walk_binary_search
+
+NUMS1, TARGET1 = [1, 3, 5, 7, 9, 11], 7
+NUMS2, TARGET2 = [], 3
+NUMS3, TARGET3 = [5], 5
+NUMS4, TARGET4 = [1, 3, 5], 4  # absent
+NUMS5, TARGET5 = [1, 2, 2, 2, 3], 2
+NUMS6 = list(range(0, 100, 3))  # 0, 3, ..., 99
+TARGET6_HIT, TARGET6_MISS = 51, 50
 
 
 def test_small():

@@ -1,11 +1,10 @@
-from dsa_skelton.walk_subsets import (
-    NUMS1,
-    NUMS2,
-    NUMS3,
-    NUMS4,
-    NUMS5,
-    walk_subsets,
-)
+from dsa_skelton.walk_subsets import walk_subsets
+
+NUMS1 = [1, 2]
+NUMS2 = []
+NUMS3 = [5]
+NUMS4 = [1, 2, 2]
+NUMS5 = [1, 2, 3, 4]
 
 
 def _normalise(subsets):

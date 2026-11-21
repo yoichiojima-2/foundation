@@ -1,11 +1,10 @@
-from dsa_skelton.walk_stack import (
-    ITEMS1,
-    ITEMS2,
-    ITEMS3,
-    ITEMS4,
-    ITEMS5,
-    walk_stack,
-)
+from dsa_skelton.walk_stack import walk_stack
+
+ITEMS1 = [1, 2, 3]
+ITEMS2 = []
+ITEMS3 = [7]
+ITEMS4 = [1, 2, 2, 3, 1]
+ITEMS5 = list(range(10))
 
 
 def test_small():

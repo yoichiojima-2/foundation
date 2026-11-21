@@ -1,10 +1,9 @@
-from dsa_skelton.walk_dp import (
-    N1,
-    N2,
-    N3,
-    N4,
-    walk_dp,
-)
+from dsa_skelton.walk_dp import walk_dp
+
+N1 = 5
+N2 = 0
+N3 = 1
+N4 = 15
 
 
 def test_small():

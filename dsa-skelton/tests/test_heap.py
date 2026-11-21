@@ -1,11 +1,10 @@
-from dsa_skelton.walk_heap import (
-    ITEMS1,
-    ITEMS2,
-    ITEMS3,
-    ITEMS4,
-    ITEMS5,
-    walk_heap,
-)
+from dsa_skelton.walk_heap import walk_heap
+
+ITEMS1 = [5, 1, 4, 2, 3]
+ITEMS2 = []
+ITEMS3 = [7]
+ITEMS4 = [3, 1, 3, 2, 1]
+ITEMS5 = [9, 4, 7, 1, 8, 2, 6, 3, 5, 0]
 
 
 def test_small():

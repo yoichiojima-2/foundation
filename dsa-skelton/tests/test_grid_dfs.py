@@ -1,11 +1,22 @@
-from dsa_skelton.walk_grid_dfs import (
-    GRID1,
-    GRID2,
-    GRID3,
-    GRID4,
-    GRID5,
-    walk_grid_dfs,
-)
+from dsa_skelton.walk_grid_dfs import walk_grid_dfs
+
+GRID1 = [
+    [1, 1, 0],
+    [0, 1, 0],
+    [0, 0, 1],
+]
+GRID2 = []
+GRID3 = [
+    [0, 0],
+    [0, 0],
+]
+GRID4 = [[1]]
+GRID5 = [
+    [1, 1, 0, 0, 1],
+    [1, 0, 0, 1, 1],
+    [0, 0, 1, 0, 0],
+    [1, 1, 1, 0, 1],
+]
 
 
 def _copy(grid):

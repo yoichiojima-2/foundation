@@ -1,18 +1,11 @@
-from dsa_skelton.walk_fixed_window import (
-    K1,
-    K2,
-    K3,
-    K4,
-    K5,
-    K6,
-    NUMS1,
-    NUMS2,
-    NUMS3,
-    NUMS4,
-    NUMS5,
-    NUMS6,
-    walk_fixed_window,
-)
+from dsa_skelton.walk_fixed_window import walk_fixed_window
+
+NUMS1, K1 = [1, 2, 3, 4, 5], 3
+NUMS2, K2 = [], 1
+NUMS3, K3 = [1, 2], 3  # k larger than input -> no windows
+NUMS4, K4 = [7], 1
+NUMS5, K5 = [2, 2, 2], 2
+NUMS6, K6 = [1, 2, 3, 4, 5, 6, 7, 8], 4
 
 
 def test_small():

@@ -1,9 +1,22 @@
-from dsa_skelton.walk_dfs import (
-    TREE1,
-    TREE2,
-    TREE3,
-    walk_dfs,
-)
+from dsa_skelton.walk_dfs import walk_dfs
+
+# Every node appears as a key; leaves map to [].
+TREE1 = {1: [2, 3], 2: [4, 5], 3: [6], 4: [], 5: [], 6: []}
+TREE2 = {1: []}
+TREE3 = {
+    1: [2, 3, 4],
+    2: [5, 6],
+    3: [],
+    4: [7, 8, 9],
+    5: [10],
+    6: [],
+    7: [],
+    8: [11, 12],
+    9: [],
+    10: [],
+    11: [],
+    12: [],
+}
 
 
 def test_small():

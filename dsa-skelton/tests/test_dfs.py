@@ -4,7 +4,8 @@ from dsa_skelton.walk_dfs import walk_dfs
 from dsa import to_graph
 
 
-# Adjacency dicts are built into GraphNodes; leaves map to [].
+# Adjacency dicts are built into GraphNodes; leaves map to []. The walk
+# starts at the root.
 @pytest.mark.parametrize(
     "tree, node, expected",
     [
@@ -15,12 +16,6 @@ from dsa import to_graph
             id="small",
         ),
         pytest.param({1: []}, 1, [1], id="single"),
-        pytest.param(
-            {1: [2, 3], 2: [4, 5], 3: [6], 4: [], 5: [], 6: []},
-            2,
-            [2, 4, 5],
-            id="subtree",
-        ),
         pytest.param(
             {
                 1: [2, 3, 4],

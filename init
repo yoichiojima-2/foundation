@@ -5,14 +5,14 @@ set -euo pipefail
 init() {
     name=$1
 
-    uv init $name
-    cd $name
+    uv init leetcode/$name
+    cd leetcode/$name
     mkdir tests
     touch "src/${name//-/_}/solution.py"
     touch "tests/test_solution.py"
     uv add pytest
-    uv add --editable ../dsa
-    cd ..
+    uv add --editable ../../dsa
+    cd ../..
 
     echo "created: $name"
 }

@@ -1,6 +1,12 @@
 def walk_variable_window(nums: list[int], k: int):
     """Grow the window rightward, shrink from the left while its sum exceeds k; return the window (as a list) after each step."""
-    pass
+    left = 0
+    results = []
+    for right in range(len(nums)):
+        if right - left + 1 > k:
+            left += 1
+        results.append(nums[left:right])
+    return results
 
 
 # Inputs are non-negative, so shrinking always lowers the sum.
@@ -29,5 +35,12 @@ def test_duplicates():
 
 def test_larger():
     assert walk_variable_window(NUMS5, K5) == [
-        [2], [2, 1], [1, 5], [1, 5, 1], [1, 3], [1, 3, 2], [2, 4], [2, 4, 1],
+        [2],
+        [2, 1],
+        [1, 5],
+        [1, 5, 1],
+        [1, 3],
+        [1, 3, 2],
+        [2, 4],
+        [2, 4, 1],
     ]

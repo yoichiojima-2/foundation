@@ -1,8 +1,11 @@
 import pytest
 from dsa_skelton.walk_bfs import walk_bfs
 
+from dsa import to_graph
 
-# Every node appears as a key; neighbours are visited in the order listed.
+
+# Adjacency dicts are built into GraphNodes; neighbours are visited in the
+# order listed.
 @pytest.mark.parametrize(
     "graph, start, expected",
     [
@@ -45,4 +48,4 @@ from dsa_skelton.walk_bfs import walk_bfs
     ],
 )
 def test_walk_bfs(graph, start, expected):
-    assert walk_bfs(graph, start) == expected
+    assert walk_bfs(to_graph(graph)[start]) == expected

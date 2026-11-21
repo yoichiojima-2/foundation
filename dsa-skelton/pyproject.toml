@@ -8,6 +8,7 @@ authors = [
 ]
 requires-python = ">=3.13"
 dependencies = [
+    "dsa",
     "pytest>=9.2.0",
     "ruff>=0.17.6",
 ]
@@ -26,3 +27,6 @@ dev = [
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.uv.sources]
+dsa = { path = "../dsa", editable = true }

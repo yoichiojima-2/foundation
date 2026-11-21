@@ -1,8 +1,10 @@
 import pytest
 from dsa_skelton.walk_dfs import walk_dfs
 
+from dsa import to_graph
 
-# Every node appears as a key; leaves map to [].
+
+# Adjacency dicts are built into GraphNodes; leaves map to [].
 @pytest.mark.parametrize(
     "tree, node, expected",
     [
@@ -41,4 +43,4 @@ from dsa_skelton.walk_dfs import walk_dfs
     ],
 )
 def test_walk_dfs(tree, node, expected):
-    assert walk_dfs(tree, node) == expected
+    assert walk_dfs(to_graph(tree)[node]) == expected

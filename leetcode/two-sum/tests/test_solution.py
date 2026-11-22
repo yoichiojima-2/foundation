@@ -1,4 +1,4 @@
-from two_sum.two_sum import Solution
+from two_sum.solution import Solution
 
 
 def test_two_sum_0():

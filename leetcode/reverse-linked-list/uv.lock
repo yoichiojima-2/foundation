@@ -15,12 +15,11 @@ wheels = [
 name = "dsa"
 version = "0.1.0"
 source = { editable = "../../dsa" }
-dependencies = [
-    { name = "pytest" },
-]
 
 [package.metadata]
-requires-dist = [{ name = "pytest", specifier = ">=9.2.0" }]
+
+[package.metadata.requires-dev]
+dev = [{ name = "pytest", specifier = ">=9.2.0" }]
 
 [[package]]
 name = "iniconfig"
@@ -80,11 +79,15 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "dsa" },
+]
+
+[package.dev-dependencies]
+dev = [
     { name = "pytest" },
 ]
 
 [package.metadata]
-requires-dist = [
-    { name = "dsa", editable = "../../dsa" },
-    { name = "pytest", specifier = ">=9.2.0" },
-]
+requires-dist = [{ name = "dsa", editable = "../../dsa" }]
+
+[package.metadata.requires-dev]
+dev = [{ name = "pytest", specifier = ">=9.2.0" }]

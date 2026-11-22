@@ -1,7 +1,7 @@
 [project]
 name = "api-requests"
 version = "0.1.0"
-description = "Add your description here"
+description = "Practice making HTTP requests against a local fake API"
 readme = "README.md"
 authors = [
     { name = "yoichi ojima", email = "yoichiojima@gmail.com" }
@@ -18,5 +18,5 @@ api-requests = "api_requests.main:main"
 fake-api = "api_requests.fake_api:main"
 
 [build-system]
-requires = ["uv_build>=0.13.0,<0.14.0"]
+requires = ["uv_build>=0.13.9,<0.14.0"]
 build-backend = "uv_build"

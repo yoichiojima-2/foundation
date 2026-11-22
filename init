@@ -1,20 +1,36 @@
 #!/bin/bash
+# scaffold a new leetcode project: ./init <problem-name>
 
 set -euo pipefail
 
-init() {
-    name=$1
+if [ $# -ne 1 ]; then
+    echo "usage: ./init <problem-name>" >&2
+    exit 1
+fi
 
-    uv init leetcode/$name
-    cd leetcode/$name
-    mkdir tests
-    touch "src/${name//-/_}/solution.py"
-    touch "tests/test_solution.py"
-    uv add pytest
-    uv add --editable ../../dsa
-    cd ../..
+name=$1
+pkg=${name//-/_}
+cd "$(dirname "$0")/leetcode"
 
-    echo "created: $name"
-}
+uv init --lib --no-readme --no-workspace --vcs none --no-pin-python "$name"
+cd "$name"
+rm "src/$pkg/py.typed"
+sed -i.bak '/^description = /d' pyproject.toml && rm pyproject.toml.bak
+cat >> pyproject.toml <<'TOML'
 
-init $@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+TOML
+mkdir tests
+touch "src/$pkg/solution.py" tests/test_solution.py
+uv add --dev pytest
+uv add --editable ../../dsa
+
+# keep the problem list in leetcode/README.md sorted
+{
+    grep -v '^- ' ../README.md
+    { grep '^- ' ../README.md; echo "- $name"; } | sort
+} > ../README.md.new
+mv ../README.md.new ../README.md
+
+echo "created: leetcode/$name"

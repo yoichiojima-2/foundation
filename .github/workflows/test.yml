@@ -14,34 +14,80 @@ jobs:
       - run: uvx ruff check .
       - run: uvx ruff format --check .
 
-  python:
+  # one matrix entry per top-level directory holding a uv or cargo project,
+  # so a new directory is tested without editing this file
+  discover:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.dirs.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v6
-      - name: run pytest in every uv project
+      - name: list top-level directories with projects
+        id: dirs
         run: |
           set -euo pipefail
-          for proj in $(find . -name pyproject.toml -not -path '*/.venv/*' -exec dirname {} \;); do
+          manifests() {
+            find . -mindepth 2 \( -name .venv -o -name target -o -name .git \) -prune -o -name "$1" -print |
+              cut -d/ -f2 | sort -u | jq -R . | jq -sc .
+          }
+          matrix=$(jq -nc --argjson py "$(manifests pyproject.toml)" --argjson rs "$(manifests Cargo.toml)" \
+            '[($py + $rs | unique)[] | {dir: ., python: (. as $d | $py | index($d) != null), rust: (. as $d | $rs | index($d) != null)}]')
+          echo "$matrix" | jq .
+          echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
+
+  test:
+    needs: discover
+    if: needs.discover.outputs.matrix != '[]'
+    name: test (${{ matrix.dir }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.discover.outputs.matrix) }}
+    env:
+      DIR: ${{ matrix.dir }}
+    steps:
+      - uses: actions/checkout@v4
+      - if: matrix.python
+        uses: astral-sh/setup-uv@v6
+      - if: matrix.rust
+        uses: dtolnay/rust-toolchain@stable
+      - name: run pytest in every uv project
+        if: matrix.python
+        run: |
+          set -uo pipefail
+          failed=()
+          while IFS= read -r manifest; do
+            proj=$(dirname "$manifest")
             echo "::group::$proj"
-            if [ -z "$(find "$proj" \( -name 'test_*.py' -o -name '*_test.py' \) -not -path '*/.venv/*' -print -quit)" ]; then
+            if [ -z "$(find "$proj" -name .venv -prune -o \( -name 'test_*.py' -o -name '*_test.py' \) -print -quit)" ]; then
               echo "no tests in $proj, skipping"
-            else
-              (cd "$proj" && uv sync --frozen && uv run pytest -vvv)
+            elif ! (cd "$proj" && uv sync --frozen && uv run pytest -vvv); then
+              failed+=("$proj")
             fi
             echo "::endgroup::"
-          done
-
-  rust:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-      - name: run cargo test in every cargo project
+          done < <(find "$DIR" -name .venv -prune -o -name pyproject.toml -print | sort)
+          if [ "${#failed[@]}" -gt 0 ]; then
+            printf '::error::pytest failed in %s\n' "${failed[@]}"
+            exit 1
+          fi
+      - name: run cargo test in every cargo workspace
+        if: ${{ !cancelled() && matrix.rust }}
         run: |
-          set -euo pipefail
-          for proj in $(find . -name Cargo.toml -not -path '*/target/*' -exec dirname {} \;); do
-            echo "::group::$proj"
-            (cd "$proj" && cargo test)
+          set -uo pipefail
+          failed=()
+          # member crates resolve to their workspace root, which is tested once
+          while IFS= read -r root; do
+            echo "::group::$root"
+            if ! (cd "$root" && cargo test --workspace); then
+              failed+=("$root")
+            fi
             echo "::endgroup::"
-          done
+          done < <(find "$DIR" -name target -prune -o -name Cargo.toml -print |
+            while IFS= read -r manifest; do
+              dirname "$(cargo locate-project --workspace --message-format plain --manifest-path "$manifest")"
+            done | sort -u)
+          if [ "${#failed[@]}" -gt 0 ]; then
+            printf '::error::cargo test failed in %s\n' "${failed[@]}"
+            exit 1
+          fi

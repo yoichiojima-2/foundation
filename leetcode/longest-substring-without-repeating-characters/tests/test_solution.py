@@ -1,4 +1,4 @@
-from longest_substring_without_repeating_charactors.solution import Solution
+from longest_substring_without_repeating_characters.solution import Solution
 
 
 def test_soluion_0():

@@ -1,5 +1,5 @@
 import pytest
-from reversed_linked_list.solution import Solution
+from reverse_linked_list.solution import Solution
 
 from dsa import to_linked, to_list
 

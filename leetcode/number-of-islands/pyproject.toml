@@ -1,5 +1,5 @@
 [project]
-name = "number-of-island"
+name = "number-of-islands"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -13,7 +13,7 @@ dependencies = [
 ]
 
 [project.scripts]
-number-of-island = "number_of_island:main"
+number-of-islands = "number_of_islands:main"
 
 [build-system]
 requires = ["uv_build>=0.13.7,<0.14.0"]

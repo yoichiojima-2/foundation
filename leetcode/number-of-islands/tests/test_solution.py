@@ -1,5 +1,5 @@
 import pytest
-from number_of_island.solution import Solution
+from number_of_islands.solution import Solution
 
 
 def make_grid(rows):

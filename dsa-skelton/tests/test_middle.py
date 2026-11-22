@@ -1,19 +1,7 @@
 import pytest
 from dsa_skelton.walk_middle import has_cycle, walk_middle
 
-from dsa import to_linked
-
-
-def _with_cycle(values, pos):
-    # Build the list, then link the tail node back to the node at index pos.
-    head = to_linked(values)
-    nodes = []
-    node = head
-    while node:
-        nodes.append(node)
-        node = node.next
-    nodes[-1].next = nodes[pos]
-    return head
+from dsa import to_cyclic_linked, to_linked
 
 
 @pytest.mark.parametrize(
@@ -35,7 +23,7 @@ def test_walk_middle(values, expected):
     ],
 )
 def test_has_cycle_true(values, pos):
-    assert has_cycle(_with_cycle(values, pos)) is True
+    assert has_cycle(to_cyclic_linked(values, pos)) is True
 
 
 @pytest.mark.parametrize(

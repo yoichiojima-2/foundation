@@ -1,9 +1,60 @@
-from dsa import DSU, TreeNode, to_graph, to_linked, to_list, to_tree
+import pytest
+
+from dsa import (
+    DSU,
+    TreeNode,
+    to_cyclic_linked,
+    to_graph,
+    to_linked,
+    to_list,
+    to_tree,
+)
 
 
 def test_linked_roundtrip():
     assert to_list(to_linked([1, 2, 3])) == [1, 2, 3]
     assert to_list(to_linked([])) == []
+
+
+def _nodes(head, n):
+    # First n nodes by following next; never walks past n, so cycles are safe.
+    nodes = []
+    for _ in range(n):
+        nodes.append(head)
+        head = head.next
+    return nodes
+
+
+def test_to_cyclic_linked_tail_to_head():
+    nodes = _nodes(to_cyclic_linked([1, 2, 3], 0), 3)
+    assert [n.val for n in nodes] == [1, 2, 3]
+    assert nodes[-1].next is nodes[0]
+
+
+def test_to_cyclic_linked_tail_to_middle():
+    nodes = _nodes(to_cyclic_linked([3, 2, 0, -4], 1), 4)
+    assert [n.val for n in nodes] == [3, 2, 0, -4]
+    assert nodes[-1].next is nodes[1]
+    assert len({id(n) for n in nodes}) == 4  # no cycle before the tail
+
+
+def test_to_cyclic_linked_self_loop():
+    head = to_cyclic_linked([7], 0)
+    assert head.val == 7
+    assert head.next is head
+
+
+@pytest.mark.parametrize(
+    "values, pos",
+    [
+        pytest.param([], 0, id="empty"),
+        pytest.param([1, 2], 2, id="pos-too-large"),
+        pytest.param([1, 2], -1, id="negative-pos"),
+    ],
+)
+def test_to_cyclic_linked_bad_pos(values, pos):
+    with pytest.raises(IndexError):
+        to_cyclic_linked(values, pos)
 
 
 def test_to_tree():

@@ -19,7 +19,7 @@ repos:
     hooks:
       - id: cargo-fmt
         name: cargo fmt
-        entry: bash -c 'cd minigrep && cargo fmt -- --check'
+        entry: bash -c 'cd rust-the-book/minigrep && cargo fmt -- --check'
         language: system
-        files: ^minigrep/.*\.rs$
+        files: ^rust-the-book/minigrep/.*\.rs$
         pass_filenames: false
